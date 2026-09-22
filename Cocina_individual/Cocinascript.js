@@ -1,9 +1,13 @@
 let productos = [
-    { id: 1, nombre: "Cafe", precio: 30 },
-    { id: 2, nombre: "Capuchino", precio: 45 },
-    { id: 3, nombre: "Sandwich", precio: 50 }
+    { id: 1, nombre: "Cafe", precio: 30, tipo: "Cafe" },
+    { id: 2, nombre: "Capuchino", precio: 45, tipo: "Cafe" },
+    { id: 3, nombre: "Sandwich", precio: 50, tipo: "comida" },
+    { id: 4, nombre: "Pastel", precio: 60, tipo: "postre" },
+    { id: 5, nombre: "Tarta", precio: 70, tipo: "postre" },
+    { id: 6, nombre: "Ensalada", precio: 40, tipo: "comida" }
 ];
 
+// Función para mostrar los productos en la página
 function mostrarProductos() {
     let texto = "";
 
@@ -26,6 +30,7 @@ function mostrarProductos() {
     document.getElementById("productos").innerHTML = texto;
 }
 
+// Función para agregar un nuevo producto
 function agregarProducto() {
     let nombre = document.getElementById("nombre").value;
     let precio = Number(document.getElementById("precio").value);
@@ -43,6 +48,7 @@ function agregarProducto() {
 
     mostrarProductos();
 }
+
 
 function editarProducto(id) {
     let producto = productos.find(function(producto) {
@@ -90,6 +96,7 @@ function mostrarPedidos() {
     document.getElementById("pedidos").innerHTML = texto;
 }
 
+//
 function pedidoListo(id) {
     let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
@@ -105,6 +112,16 @@ function pedidoListo(id) {
 
     mostrarPedidos();
 }
+
+//
+
+const boton = document.getElementById("btn-menu");
+const menu = document.getElementById("menu-contenido");
+
+boton.addEventListener("click", () => {
+  menu.classList.toggle("oculto");
+});
+
 
 mostrarProductos();
 mostrarPedidos();
