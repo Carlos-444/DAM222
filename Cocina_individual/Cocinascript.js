@@ -1,240 +1,249 @@
-let productos = [
-
-
-    { id: 1, nombre: "Cafe", precio: 30, tipo: "Café" },
-    { id: 2, nombre: "Chilaquiles", precio: 75, tipo: "Comida" },
-    { id: 3, nombre: "Pastel de Chocolate", precio: 65, tipo: "Pastel" },
-    { id: 4, nombre: "Coca Cola", precio: 25, tipo: "Bebida" },
-    { id: 5, nombre: "Capuchino", precio: 45, tipo: "Café" },
-    { id: 6, nombre: "Tamales", precio: 35, tipo: "Comida" },
-    { id: 7, nombre: "Cheesecake", precio: 80, tipo: "Pastel" },
-    { id: 8, nombre: "Americano", precio: 25, tipo: "Café" },
-    { id: 9, nombre: "Sandwich", precio: 50, tipo: "Comida" },
-    { id: 10, nombre: "Tarta de Fresa", precio: 70, tipo: "Pastel" },
-    { id: 11, nombre: "Agua Natural", precio: 15, tipo: "Bebida" },
-    { id: 12, nombre: "Latte", precio: 50, tipo: "Café" },
-    { id: 13, nombre: "Huevos con Jamon", precio: 65, tipo: "Comida" },
-    { id: 14, nombre: "Pastel de Tres Leches", precio: 75, tipo: "Pastel" },
-    { id: 15, nombre: "Te de Manzanilla", precio: 30, tipo: "Bebida" },
-    { id: 16, nombre: "Mocha", precio: 55, tipo: "Café" },
-    { id: 17, nombre: "Quesadillas", precio: 45, tipo: "Comida" },
-    { id: 18, nombre: "Pastel de Vainilla", precio: 55, tipo: "Pastel" },
-    { id: 19, nombre: "Jugo de Naranja", precio: 40, tipo: "Bebida" },
-    { id: 20, nombre: "Espresso", precio: 20, tipo: "Café" },
-    { id: 21, nombre: "Molletes", precio: 60, tipo: "Comida" },
-    { id: 22, nombre: "Red Velvet", precio: 95, tipo: "Pastel" },
-    { id: 23, nombre: "Limonada", precio: 30, tipo: "Bebida" },
-    { id: 24, nombre: "Cafe Irlandes", precio: 85, tipo: "Café" },
-    { id: 25, nombre: "Enchiladas", precio: 80, tipo: "Comida" },
-    { id: 26, nombre: "Pastel de Zanahoria", precio: 65, tipo: "Pastel" },
-    { id: 27, nombre: "Fanta", precio: 25, tipo: "Bebida" },
-    { id: 28, nombre: "Chocolate Caliente", precio: 45, tipo: "Bebida" },
-    { id: 29, nombre: "Torta de Chilaquiles", precio: 70, tipo: "Comida" },
-    { id: 30, nombre: "Pastel de Cafe", precio: 90, tipo: "Pastel" }
-
-
-];
-
-// Función para mostrar los productos en la página
-function mostrarProductos() {
-    let texto = "";
-
-    productos.forEach(function(producto) {
-        texto += `
-            <div class="producto">
-                ${producto.nombre} - $${producto.precio}
-
-                <button onclick="editarProducto(${producto.id})">
-                    Editar
-                </button>
-
-                <button onclick="eliminarProducto(${producto.id})">
-                    Eliminar
-                </button>
-            </div>
-        `;
-    });
-
-    document.getElementById("productos").innerHTML = texto;
-}
-
-// Función para agregar un nuevo producto
-function agregarProducto() {
-    let nombre = document.getElementById("nombre").value;
-     let tipo = document.getElementById("tipo").value;
-    let precio = Number(document.getElementById("precio").value);
-
-    let producto = {
-        id: Date.now(),
-        nombre: nombre,
-        precio: precio,
-        tipo: tipo
-    };
-
-    productos.push(producto);
-
-    document.getElementById("nombre").value = "";
-    document.getElementById("tipo").value = "";
-    document.getElementById("precio").value = "";
-
-    mostrarProductos();
-}
-
-
-function editarProducto(id) {
-    let producto = productos.find(function(producto) {
-        return producto.id == id;
-    });
-
-    let nuevoNombre = prompt("Nuevo nombre", producto.nombre);
-    let nuevoPrecio = prompt("Nuevo precio", producto.precio);
-    let nuevoTipo = prompt("Nuevo tipo", producto.tipo);
-
-    producto.nombre = nuevoNombre;
-    producto.precio = Number(nuevoPrecio);
-    producto.tipo = nuevoTipo;
-
-    mostrarProductos();
-}
-
-function eliminarProducto(id) {
-    productos = productos.filter(function(producto) {
-        return producto.id != id;
-    });
-
-    mostrarProductos();
-}
-
+// Mostrar pedidos en cocina
 function mostrarPedidos() {
-    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+    let pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
 
     let texto = "";
+
 
     pedidos.forEach(function(pedido) {
-        if (pedido.estado == "En cocina" || pedido.estado == "Listo") {
+
+        if (
+            pedido.estado == "Pedido recibido" ||
+            pedido.estado == "Preparando" ||
+            pedido.estado == "Empacando"
+        ) {
+
+            let productosPedido = "";
+
+
+            pedido.productos.forEach(function(producto) {
+
+                productosPedido += `
+                    <p>${producto.nombre}</p>
+                `;
+
+            });
+
+
             texto += `
                 <div class="pedido">
+
                     <p>Pedido ${pedido.id}</p>
-                    <p>Total: $${pedido.total}</p>
+
+                    <p>Productos:</p>
+
+                    ${productosPedido}
+
                     <p>Estado: ${pedido.estado}</p>
+
+                    <button onclick="prepararPedido(${pedido.id})">
+                        Preparar
+                    </button>
+
+                    <button onclick="empacarPedido(${pedido.id})">
+                        Empacar
+                    </button>
 
                     <button onclick="pedidoListo(${pedido.id})">
                         Pedido listo
                     </button>
+
+                    <button onclick="simularPrepararCafe(${pedido.id})">
+                        Preparar café
+                    </button>
+
+                    <button onclick="errorCocina(${pedido.id})">
+                        Error en cocina
+                    </button>
+
+                    <button onclick="faltaIngrediente(${pedido.id})">
+                        Falta ingrediente
+                    </button>
+
+                    <button onclick="cancelarPedido(${pedido.id})">
+                        Cancelar pedido
+                    </button>
+
                 </div>
             `;
+
         }
+
     });
+
 
     document.getElementById("pedidos").innerHTML = texto;
 }
 
-//
-function pedidoListo(id) {
-    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+// Estado: Preparando
+function prepararPedido(id) {
+
+    let pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
+
 
     let pedido = pedidos.find(function(pedido) {
+
         return pedido.id == id;
+
     });
 
-    pedido.estado = "Listo";
 
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    pedido.estado = "Preparando";
 
-    alert("Pedido listo");
+
+    localStorage.setItem(
+        "pedidos",
+        JSON.stringify(pedidos)
+    );
+
+
+    console.log("Pedido preparando");
+
 
     mostrarPedidos();
 }
 
-//parte del menu desplegable
 
-const boton = document.getElementById("btn-menu");
-const menu = document.getElementById("menu-contenido");
+// Estado: Empacando
+function empacarPedido(id) {
 
-boton.addEventListener("click", () => {
-  menu.classList.toggle("oculto");
-});
+    let pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
 
-function productosCaros() {
 
-    let resultado = productos.filter(function(producto) {
-        return producto.precio > 50;
+    let pedido = pedidos.find(function(pedido) {
+
+        return pedido.id == id;
+
     });
 
-    mostrarResultado(resultado);
-}
 
-function productosBaratos() {
+    pedido.estado = "Empacando";
 
-    let resultado = productos.filter(function(producto) {
-        return producto.precio < 50;
-    });
 
-    mostrarResultado(resultado);
-}
+    localStorage.setItem(
+        "pedidos",
+        JSON.stringify(pedidos)
+    );
 
-function buscarPostres() {
 
-    let resultado = productos.filter(function(producto) {
-        return producto.tipo == "Pastel";
-    });
+    console.log("Pedido empacando");
 
-    mostrarResultado(resultado);
-}
 
-function buscarCafes() {
-
-    let resultado = productos.filter(function(producto) {
-        return producto.tipo == "Café";
-    });
-
-    mostrarResultado(resultado);
+    mostrarPedidos();
 }
 
 
-function mostrarResultado(resultado) {
+// Pedido listo
+function pedidoListo(id) {
 
-    let texto = "";
+    let pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
 
-    resultado.forEach(function(producto) {
 
-        texto += `
-            <div class="producto">
-                ${producto.nombre} - $${producto.precio}
-            </div>
-        `;
+    let pedido = pedidos.find(function(pedido) {
+
+        return pedido.id == id;
 
     });
 
-    document.getElementById("productos").innerHTML = texto;
+
+    pedido.estado = "Pedido listo";
+
+
+    localStorage.setItem(
+        "pedidos",
+        JSON.stringify(pedidos)
+    );
+
+
+    console.log("Pedido listo");
+
+
+    alert("Pedido listo");
+
+
+    mostrarPedidos();
 }
 
 
-//Se utilizo la funcion find
-function buscarProducto() {
+// Simular preparar café
+// setTimeout simula asincronía
+function simularPrepararCafe(id) {
 
-    let nombre = prompt("Escribe el nombre del producto");
+    console.log("Preparando café...");
 
-    let producto = productos.find(function(producto) {
 
-        return producto.nombre.toLowerCase() == nombre.toLowerCase();
+    setTimeout(function() {
 
-    });
-
-    if (producto) {
+        console.log("Café preparado");
 
         alert(
-            "Producto: " + producto.nombre +
-            "\nPrecio: $" + producto.precio +
-            "\nTipo: " + producto.tipo
+            "Café preparado para el pedido " + id
         );
 
-    } else {
-
-        alert("Producto no encontrado");
-
-    }
+    }, 2000);
 }
 
-mostrarProductos();
+
+// Simular error en cocina
+function errorCocina(id) {
+
+    console.log(
+        "Error en cocina en el pedido " + id
+    );
+
+    alert("Error en cocina");
+}
+
+
+// Simular falta de ingrediente
+function faltaIngrediente(id) {
+
+    console.log(
+        "Falta ingrediente en el pedido " + id
+    );
+
+    alert("Falta ingrediente");
+}
+
+
+// Cancelar pedido
+function cancelarPedido(id) {
+
+    let pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
+
+
+    let pedido = pedidos.find(function(pedido) {
+
+        return pedido.id == id;
+
+    });
+
+
+    pedido.estado = "Cancelado";
+
+
+    localStorage.setItem(
+        "pedidos",
+        JSON.stringify(pedidos)
+    );
+
+
+    console.log("Pedido cancelado");
+
+
+    alert("Pedido cancelado");
+
+
+    mostrarPedidos();
+}
+
+
+// Mostrar al iniciar
 mostrarPedidos();
