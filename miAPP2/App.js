@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Saludo } from './components/Saludo';
 import { Saludos2 } from './components/Saludos2';
+import { Perfil } from './components/Perfil';
 
 export default function App() {
   return (
@@ -16,6 +17,10 @@ export default function App() {
 
       <Saludos2></Saludos2>
       <Saludos2/>
+
+      <Text>--------------------------------------------------</Text>
+      <Perfil></Perfil>
+
      
     </View>
   );
