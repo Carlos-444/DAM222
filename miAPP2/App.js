@@ -8,18 +8,15 @@ import { Perfil } from './components/Perfil';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hola Mundo version Movil!</Text>
-      <Image source={require('./assets/wave.png')}/>
+      
+      
       <Text>--------------------------------------------------</Text>
-       <Saludo></Saludo>
-       <Saludo/>
-       <Text>--------------------------------------------------</Text>
+      
+      <Perfil nombre="carlos" materia={"Movil"}/>
 
-      <Saludos2></Saludos2>
-      <Saludos2/>
+      <Perfil nombre="Leo" cuatri="Cuarto"/>
 
-      <Text>--------------------------------------------------</Text>
-      <Perfil></Perfil>
+      <Perfil nombre="Aaron" carrera="ITIID"/>
 
      
     </View>
