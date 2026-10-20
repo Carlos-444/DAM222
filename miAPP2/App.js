@@ -9,8 +9,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       
-      
-      <Text>--------------------------------------------------</Text>
+
       
       <Perfil style={styles.tarjeta1} nombre="carlos" materia="ED" cuatri="4" carrera="ITIID"/>
 
@@ -28,7 +27,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
+
+    flexDirection: 'row',
+justifyContent: 'space-evenly',
+alignItems: 'center',
+          },
+
+
   imagen: {
     width: 200,
     height: 200,
@@ -42,6 +47,7 @@ const styles = StyleSheet.create({
   },
 
   tarjeta3:{
-    backgroundColor:'orange'
+    backgroundColor:'orange',
+    
   },
 });

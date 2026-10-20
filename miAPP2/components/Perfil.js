@@ -46,6 +46,7 @@ const estilos=StyleSheet.create({
         borderRadius:10,
         padding:12,
         margin:5,
+        
 
     },
 
