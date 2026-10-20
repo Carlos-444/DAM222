@@ -12,11 +12,11 @@ export default function App() {
       
       <Text>--------------------------------------------------</Text>
       
-      <Perfil nombre="carlos" materia={"Movil"}/>
+      <Perfil style={styles.tarjeta1} nombre="carlos" materia="ED" cuatri="4" carrera="ITIID"/>
 
-      <Perfil nombre="Leo" cuatri="Cuarto"/>
+      <Perfil style={styles.tarjeta2} nombre="Leo" materia="Movil" cuatri="4" carrera="ITIID"/>
 
-      <Perfil nombre="Aaron" carrera="ITIID"/>
+      <Perfil style={styles.tarjeta3} nombre="Aaron" materia="Web" cuatri="4"  carrera="ITIID"/>
 
      
     </View>
@@ -33,5 +33,15 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     resizeMode: 'contain',
+  },
+  tarjeta1:{
+    backgroundColor:'#0c090b'
+  },
+  tarjeta2:{
+    backgroundColor:'rgba(238, 202, 22, 0.93)'
+  },
+
+  tarjeta3:{
+    backgroundColor:'orange'
   },
 });
