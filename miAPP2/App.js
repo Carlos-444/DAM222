@@ -1,17 +1,20 @@
 /*1. Zona  de importación de librerías y componentes*/
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import MenuScreen from './screens/MenuScreen';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaProvider>
+      <View style={styles.container}>
       
-  <MenuScreen></MenuScreen>
+        <MenuScreen></MenuScreen>
 
-      <StatusBar style="auto" />
-     
-    </View>
+        <StatusBar style="auto" />
+      
+      </View>
+    </SafeAreaProvider>
   );
 }
 

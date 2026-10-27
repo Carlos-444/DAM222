@@ -2,7 +2,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet, text } from 'react-native';
 
-export default function Textinput() {
+export default function TextInput() {
   return (
     <View style={styles.container}>
 

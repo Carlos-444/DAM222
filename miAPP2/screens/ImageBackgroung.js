@@ -2,7 +2,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet, text } from 'react-native';
 
-export default function imageBackogroung() {
+
+export default function ImageBackgroung() {
   return (
     <View style={styles.container}>
 
