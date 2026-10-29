@@ -1,26 +1,53 @@
-/*1. Zona  de importación de librerías y componentes*/
+/* 1. Zona de importaciones */
 import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet, text } from 'react-native';
+import { StyleSheet, View, Text, Image, Pressable, Switch } from 'react-native';
+import { useState } from 'react';
+import SwitchEjemplo from '../components/SwitchEjemplo';
 
-export default function Pressable() {
-  return (
-    <View style={styles.container}>
+/* 2. Zona Main */
+export default function PressableScreen() {
+    const [imagenGrande, setImagenGrande] = useState(false)
+    const [obscuro, setObscuro] = useState(false)
 
-         <text>Practica de israel</text>
-      
+    return (
+        <View style={[styles.container, { backgroundColor: obscuro ? '#000000' : '#ffffff' }]}>
 
+            <Pressable onPress={() => setImagenGrande(!imagenGrande)}>
+                <Text style={{ color: obscuro ? '#ffffff' : '#000000' }}>Presioname</Text>
+            </Pressable>
 
-      <StatusBar style="auto" />
-     
-    </View>
-  );
+            <Pressable onPress={() => setImagenGrande(!imagenGrande)}>
+                <Image
+                    source={require("../assets/wave.png")}
+                    style={imagenGrande ? styles.imagenGrande : styles.image}
+                />
+            </Pressable>
+
+            <SwitchEjemplo obscuro={obscuro} setObscuro={setObscuro} />
+
+            <StatusBar style="auto" />
+        </View>
+    );
 }
 
+/* 3. Zona de estilos y posicionamiento */
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-
+    container: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    texto: {
+        fontSize: 20,
+        marginBottom: 20
+    },
+    image: {
+        width: 100,
+        height: 100,
+    },
+    imagenGrande: {
+        width: 180,
+        height: 180,
+    }
 });
