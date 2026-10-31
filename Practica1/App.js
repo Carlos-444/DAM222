@@ -1,55 +1,36 @@
-
-import { StatusBar } from 'expo-status-bar';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  ActivityIndicator
-} from 'react-native';
-import { useState } from 'react';
-import Inicio from './Inicio';
+import { StatusBar } from "expo-status-bar";
+import { Button } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button} from "react-native";
 
 export default function App() {
-  const [cargando, setCargando] = useState(false);
-  const [pantalla, setPantalla] = useState('principal');
-
-  function cambiarPantalla(destino) {
-    setCargando(true);
-
-    setTimeout(() => {
-      setPantalla(destino);
-      setCargando(false);
-    }, 1500);
-  }
-
-  if (cargando) {
-    return (
-      <View style={styles.cargando}>
-        <ActivityIndicator size="large" color="#007AFF" />
-        <Text style={styles.texto}>Cargando...</Text>
-      </View>
-    );
-  }
-
-  if (pantalla === 'inicio') {
-    return (
-      <Inicio
-        onRegresar={() => cambiarPantalla('principal')}
-      />
-    );
-  }
-
   return (
     <View style={styles.container}>
+      <Text>REGISTRO DE EVENTO UNIVERSITARIO</Text>
+
+
+      <TextInput
+          style={styles.input}
+            placeholder="Escribe tu nombre completo."
+    
+          />
+
+
+        <TextInput
+          style={styles.input}
+            placeholder="Escribe tu  Carrera."
+        />
+
+        <TextInput
+          style={styles.input}
+            placeholder="Escribe tu Cuatrimestre."
+        />
+
+
+        <Text> OPCIONES </Text>
+
+
+        <Button></Button>
       <StatusBar style="auto" />
-
-      <Text style={styles.titulo}>Pantalla principal</Text>
-
-      <Button
-        title="Ir a Inicio"
-        onPress={() => cambiarPantalla('inicio')}
-      />
     </View>
   );
 }
@@ -57,23 +38,19 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20
+    justifyContent: "center",
+    alignItems: "center",
+    gap : 70,
+
   },
-  cargando: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+
+   input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#a0a0a0',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 15
   },
-  titulo: {
-    fontSize: 24,
-    marginBottom: 20
-  },
-  texto: {
-    marginTop: 10,
-    fontSize: 16
-  }
+
 });
