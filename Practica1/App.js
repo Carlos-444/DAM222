@@ -1,56 +1,204 @@
-import { StatusBar } from "expo-status-bar";
-import { Button } from "react-native";
-import { View, Text, StyleSheet, TextInput, Button} from "react-native";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>REGISTRO DE EVENTO UNIVERSITARIO</Text>
+import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import {StyleSheet,Text,View,TextInput,Switch,TouchableOpacity,Alert,ScrollView
+} from 'react-native';
 
+export default function RegistroEventoUniversitario() {
 
-      <TextInput
-          style={styles.input}
-            placeholder="Escribe tu nombre completo."
-    
-          />
+    const [nombre, setNombre] = useState('');
+    const [carrera, setCarrera] = useState('');
+    const [semestre, setSemestre] = useState('');
 
+    const [taller, setTaller] = useState(false);
+    const [constancia, setConstancia] = useState(false);
+    const [deportes, setDeportes] = useState(false);
 
-        <TextInput
-          style={styles.input}
-            placeholder="Escribe tu  Carrera."
-        />
+    const enviarRegistro = () => {
 
-        <TextInput
-          style={styles.input}
-            placeholder="Escribe tu Cuatrimestre."
-        />
+        if (
+            nombre.trim() === '' ||
+            carrera.trim() === '' ||
+            semestre.trim() === ''
+        ) {
+            Alert.alert(
+                'Campos incompletos',
+                'Debes llenar todos los campos.'
+            );
+            return;
+        }
 
+        if (isNaN(semestre)) {
+            Alert.alert(
+                'Error',
+                'El semestre debe ser un número.'
+            );
+            return;
+        }
 
-        <Text> OPCIONES </Text>
+        Alert.alert(
+                    'Registro enviado',
+                    `Nombre: ${nombre}
+        Carrera: ${carrera}
+        Semestre: ${semestre}
 
+        Taller: ${taller ? 'Sí' : 'No'}
+        Constancia: ${constancia ? 'Sí' : 'No'}
+        Deportes: ${deportes ? 'Sí' : 'No'}`
+        );
+    };
 
-        <Button></Button>
-      <StatusBar style="auto" />
-    </View>
-  );
+    return (
+
+        <ScrollView contentContainerStyle={styles.container}>
+
+            <StatusBar style="auto" />
+
+            <View style={styles.contenedor}>
+
+                <Text style={styles.titulo}>
+                    Registro de Evento Universitario
+                </Text>
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nombre completo"
+                    value={nombre}
+                    onChangeText={setNombre}
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Carrera"
+                    value={carrera}
+                    onChangeText={setCarrera}
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Semestre"
+                    keyboardType="numeric"
+                    value={semestre}
+                    onChangeText={setSemestre}
+                />
+
+                <Text style={styles.subtitulo}>
+                    Opciones
+                </Text>
+
+                <View style={styles.fila}>
+                    <Text style={styles.texto}>
+                        ¿Asistirá al taller?
+                    </Text>
+
+                    <Switch
+                        value={taller}
+                        onValueChange={setTaller}
+                    />
+                </View>
+
+                <View style={styles.fila}>
+                    <Text style={styles.texto}>
+                        ¿Requiere constancia?
+                    </Text>
+
+                    <Switch
+                        value={constancia}
+                        onValueChange={setConstancia}
+                    />
+                </View>
+
+                <View style={styles.fila}>
+                    <Text style={styles.texto}>
+                        ¿Participará en actividades deportivas?
+                    </Text>
+
+                    <Switch
+                        value={deportes}
+                        onValueChange={setDeportes}
+                    />
+                </View>
+
+                <TouchableOpacity
+                    style={styles.boton}
+                    onPress={enviarRegistro}
+                >
+                    <Text style={styles.textoBoton}>
+                        Enviar Registro
+                    </Text>
+                </TouchableOpacity>
+
+            </View>
+
+        </ScrollView>
+
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap : 70,
 
-  },
+    container: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        padding: 10
+    },
 
-   input: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#a0a0a0',
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 15
-  },
+    contenedor: {
+        width: 395,
+        backgroundColor: 'white',
+        padding: 50,
+        borderWidth: 3,
+        borderColor: 'white'
+    },
+
+    titulo: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 30
+    },
+
+    input: {
+        borderWidth: 2,
+        borderColor: 'black',
+        padding: 12,
+        marginBottom: 15,
+        fontSize: 17
+    },
+
+    subtitulo: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 15,
+    },
+
+    fila: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 15,
+    },
+
+    texto: {
+        fontSize: 18,
+        flex: 1
+        
+    },
+
+    boton: {
+        backgroundColor: 'green',
+        padding: 20,
+        marginTop: 20,
+    },
+
+    textoBoton: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold'
+    }
 
 });
