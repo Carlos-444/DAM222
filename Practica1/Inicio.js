@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {
   StyleSheet,
@@ -9,13 +8,30 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-export default function Inicio({ onRegresar }) {
+export default function Inicio({ onRegresar, onIngresar }) {
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
+
+  const handleIngresar = () => {
+    if (correo.trim() === '' || contrasena.trim() === '') {
+      Alert.alert('Error', 'Por favor ingresa tu correo y contraseña.');
+      return;
+    }
+
+    Alert.alert('Éxito', 'Sesión iniciada correctamente.', [
+      {
+        text: 'Continuar',
+        onPress: () => {
+          if (onIngresar) onIngresar();
+        },
+      },
+    ]);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -48,14 +64,15 @@ export default function Inicio({ onRegresar }) {
           <View style={styles.boton}>
             <Button
               title="Ingresar"
-              onPress={() => alert('Sesión iniciada')}
+              onPress={handleIngresar}
             />
           </View>
 
           <View style={styles.boton}>
             <Button
               title="Regresar"
-              onPress={onRegresar}
+              color="#888"
+              onPress={onRegresar || (() => Alert.alert('Aviso', 'Esta es la pantalla de inicio.'))}
             />
           </View>
         </View>
@@ -67,17 +84,18 @@ export default function Inicio({ onRegresar }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   contenido: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20
+    padding: 20,
   },
   titulo: {
     fontSize: 24,
-    marginBottom: 20
+    marginBottom: 20,
+    fontWeight: 'bold',
   },
   input: {
     width: '100%',
@@ -85,10 +103,10 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 8,
     padding: 10,
-    marginBottom: 15
+    marginBottom: 15,
   },
   boton: {
     width: '100%',
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 });
